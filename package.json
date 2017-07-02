@@ -1,0 +1,19 @@
+{
+  "name": "things-interface-pi",
+  "version": "1.0.0",
+  "description": "An interface for interacting with the Raspberry Pi",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trevorlang/things-interface-pi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trevorlang/things-interface-pi/issues"
+  },
+  "homepage": "https://github.com/trevorlang/things-interface-pi#readme"
+}

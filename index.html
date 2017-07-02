@@ -1,0 +1,42 @@
+<html>
+  <body>
+    <label for="led-status-on">LED:</label>
+    <input class="js-led-status" type="radio" name="led_status" id="led-status-on" value="on" /> On
+    <input class="js-led-status" type="radio" name="led_status" id="led-status-off" value="off" /> Off
+    <script>
+      var HOST = 'ws://localhost:1337' || location.origin.replace(/^http/, 'ws')
+      var ws = new WebSocket(HOST);
+      var $led_status = [].map.call( document.querySelectorAll('.js-led-status'), ($input) => $input );
+
+      $led_status.map(($input) => {
+
+        $input.addEventListener('change', function led_status_change() {
+
+          var $checked_input,
+              action ;
+
+          $led_status.map(($input) => {
+            if ( $input.checked ) $checked_input = $input.value;
+          });
+
+          if ( $checked_input === 'on' ) {
+            action = {
+              'action': 'led_change',
+              'state': 1
+            }
+          } else {
+            action = {
+              'action': 'led_change',
+              'state': 0
+            }
+          }
+
+          var payload = JSON.stringify(action);
+          console.log(payload);
+          ws.send(JSON.stringify(payload));
+
+        });
+      });
+    </script>
+  </body>
+</html>
