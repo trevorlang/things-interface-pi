@@ -1,33 +1,26 @@
-const express = require('express');
-const SocketServer = require('ws').Server;
+var server = require('http').createServer();
+var io = require('socket.io')(server);
 const path = require('path');
 const Output = require('./output');
 
 const led = new Output(4);
 
 const PORT = 1337;
-const INDEX = path.join(__dirname, 'index.html');
 
-const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+console.log('running');
 
-const wss = new SocketServer({ server });
-
-wss.on('connection', (ws) => {
+io.on('connection', function(client){
 
   console.log('Client connected');
 
-  ws.on('close', () => console.log('Client disconnected'));
+  io.on('close', () => console.log('Client disconnected'));
 
-  ws.on('message', function incoming(data) {
+  client.on('interface', function incoming(data) {
 
-    const json_data = JSON.parse(JSON.parse(data));
+    console.log('data', data);
 
-    console.log('data', json_data);
-
-    if (json_data.action === "led_change") {
-      if (json_data.state === 1) {
+    if (data.action === "led_change") {
+      if (data.state === 1) {
         console.log(led);
         led.on();
       } else {
@@ -36,5 +29,9 @@ wss.on('connection', (ws) => {
     }
 
     console.log(`Web socket message:`, data);
+
   });
+
 });
+
+server.listen(PORT);
