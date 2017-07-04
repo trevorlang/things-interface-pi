@@ -1,8 +1,14 @@
-var server = require('http').createServer();
-var io = require('socket.io')(server);
-const path = require('path');
-const Output = require('./output');
+import { server } from 'http'
+import io from 'socket.io-server'
+import path from 'path'
+import Output from '/output'
 import config from 'things-interface.config.js'
+
+// var server = require('http').createServer();
+// var io = require('socket.io')(server);
+// const path = require('path');
+// const Output = require('./output');
+// import config from 'things-interface.config.js'
 
 const led = new Output(4);
 
