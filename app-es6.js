@@ -1,14 +1,8 @@
 import { server } from 'http'
-import io from 'socket.io-server'
+var io = require('socket.io')(server);
 import path from 'path'
 import Output from '/output'
 import config from 'things-interface.config.js'
-
-// var server = require('http').createServer();
-// var io = require('socket.io')(server);
-// const path = require('path');
-// const Output = require('./output');
-// import config from 'things-interface.config.js'
 
 const led = new Output(4);
 
@@ -39,12 +33,20 @@ io.sockets.on('connection', function(client){
     switch (data.action) {
       case 'led_change':
 
-      default:
+        console.log(`LED change event fired`);
+        if (data.state === 1) {
+          console.log(led);
+          led.on();
+        } else {
+          led.off();
+        }
 
+      default:
         var postData = {
           event_type: data.action,
           device_name: config.name
         }
+        console.log(`Unknown device event requested: ${data.action}`);
         client.emit('unknown_device_event', postData)
     }
 
@@ -52,12 +54,7 @@ io.sockets.on('connection', function(client){
 
     if (data.action === "led_change") {
       console.log(data)
-      if (data.state === 1) {
-        console.log(led);
-        led.on();
-      } else {
-        led.off();
-      }
+
     }
 
     console.log(`Web socket message:`, data);

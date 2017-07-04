@@ -2,10 +2,6 @@
 
 var _http = require('http');
 
-var _socket = require('socket.io-server');
-
-var _socket2 = _interopRequireDefault(_socket);
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -20,11 +16,8 @@ var _thingsInterfaceConfig2 = _interopRequireDefault(_thingsInterfaceConfig);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// var server = require('http').createServer();
-// var io = require('socket.io')(server);
-// const path = require('path');
-// const Output = require('./output');
-// import config from 'things-interface.config.js'
+var io = require('socket.io')(_http.server);
+
 
 var led = new _output2.default(4);
 
@@ -32,7 +25,7 @@ var PORT = 1337;
 
 console.log('running');
 
-_socket2.default.sockets.on('connection', function (client) {
+io.sockets.on('connection', function (client) {
 
   client.emit('initial_data', { status: 'Websocket created' });
 
@@ -53,12 +46,20 @@ _socket2.default.sockets.on('connection', function (client) {
     switch (data.action) {
       case 'led_change':
 
-      default:
+        console.log('LED change event fired');
+        if (data.state === 1) {
+          console.log(led);
+          led.on();
+        } else {
+          led.off();
+        }
 
+      default:
         var postData = {
           event_type: data.action,
           device_name: _thingsInterfaceConfig2.default.name
         };
+        console.log('Unknown device event requested: ' + data.action);
         client.emit('unknown_device_event', postData);
     }
 
@@ -66,12 +67,6 @@ _socket2.default.sockets.on('connection', function (client) {
 
     if (data.action === "led_change") {
       console.log(data);
-      if (data.state === 1) {
-        console.log(led);
-        led.on();
-      } else {
-        led.off();
-      }
     }
 
     console.log('Web socket message:', data);
