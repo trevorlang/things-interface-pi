@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/trevorlang/things-interface-pi/issues"
   },
-  "homepage": "https://github.com/trevorlang/things-interface-pi#readme"
+  "homepage": "https://github.com/trevorlang/things-interface-pi#readme",
+  "devDependencies": {
+    "express": "^4.15.3",
+    "ws": "^3.0.0"
+  },
+  "dependencies": {
+    "onoff": "^1.1.3"
+  }
 }
