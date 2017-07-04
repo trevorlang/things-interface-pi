@@ -1,16 +1,10 @@
 'use strict';
 
-var _thingsInterfaceConfig = require('things-interface.config.js');
-
-var _thingsInterfaceConfig2 = _interopRequireDefault(_thingsInterfaceConfig);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var server = require('http').createServer();
 var io = require('socket.io')(server);
 var path = require('path');
 var Output = require('./output');
-
+var config = require('./things-interface.config.js');
 
 var led = new Output(4);
 
@@ -50,7 +44,7 @@ io.sockets.on('connection', function (client) {
       default:
         var postData = {
           event_type: data.action,
-          device_name: _thingsInterfaceConfig2.default.name
+          device_name: config.name
         };
         console.log('Unknown device event requested: ' + data.action);
         client.emit('unknown_device_event', postData);

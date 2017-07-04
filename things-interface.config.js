@@ -1,4 +1,4 @@
-export default config = {
+module.exports = {
   'type': 'Raspberry Pi 3',
   'name': 'OfficePi',
   'supported_events' : [

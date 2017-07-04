@@ -2,7 +2,7 @@ var server = require('http').createServer();
 var io = require('socket.io')(server);
 const path = require('path');
 const Output = require('./output');
-import config from 'things-interface.config.js'
+const config = require('./things-interface.config.js');
 
 const led = new Output(4);
 
@@ -49,7 +49,7 @@ io.sockets.on('connection', function(client){
         console.log(`Unknown device event requested: ${data.action}`);
         client.emit('unknown_device_event', postData)
     }
-    
+
     console.log(`Web socket message:`, data);
 
   });
