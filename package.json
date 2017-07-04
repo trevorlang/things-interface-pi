@@ -16,11 +16,19 @@
     "url": "https://github.com/trevorlang/things-interface-pi/issues"
   },
   "homepage": "https://github.com/trevorlang/things-interface-pi#readme",
+<<<<<<< HEAD
   "devDependencies": {
     "express": "^4.15.3",
     "ws": "^3.0.0"
   },
   "dependencies": {
     "onoff": "^1.1.3"
+=======
+  "dependencies": {
+    "express": "4.15.3",
+    "onoff": "1.1.3",
+    "socketio": "^1.0.0",
+    "ws": "3.0.0"
+>>>>>>> 4a842aa06f1591667f214a2d02a5c4f342ae8db9
   }
 }
