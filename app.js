@@ -21,7 +21,7 @@ io.on('connection', function(client){
     ],
   })
 
-  console.log('Client connected');
+  console.log('Client connected:', client);
 
   io.on('close', () => console.log('Client disconnected'));
 
