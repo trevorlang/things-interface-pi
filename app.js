@@ -1,25 +1,18 @@
 'use strict';
 
-var _http = require('http');
-
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _output = require('/output');
-
-var _output2 = _interopRequireDefault(_output);
-
 var _thingsInterfaceConfig = require('things-interface.config.js');
 
 var _thingsInterfaceConfig2 = _interopRequireDefault(_thingsInterfaceConfig);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var io = require('socket.io')(_http.server);
+var server = require('http').createServer();
+var io = require('socket.io')(server);
+var path = require('path');
+var Output = require('./output');
 
 
-var led = new _output2.default(4);
+var led = new Output(4);
 
 var PORT = 1337;
 
@@ -63,14 +56,8 @@ io.sockets.on('connection', function (client) {
         client.emit('unknown_device_event', postData);
     }
 
-    console.log('data', data);
-
-    if (data.action === "led_change") {
-      console.log(data);
-    }
-
     console.log('Web socket message:', data);
   });
 });
 
-_http.server.listen(PORT);
+server.listen(PORT);

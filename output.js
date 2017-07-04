@@ -19,4 +19,4 @@ function Output(location) {
   }
 }
 
-module.exports = Output;
+export default Output;

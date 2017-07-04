@@ -1,7 +1,7 @@
-import { server } from 'http'
+var server = require('http').createServer();
 var io = require('socket.io')(server);
-import path from 'path'
-import Output from '/output'
+const path = require('path');
+const Output = require('./output');
 import config from 'things-interface.config.js'
 
 const led = new Output(4);
@@ -49,14 +49,7 @@ io.sockets.on('connection', function(client){
         console.log(`Unknown device event requested: ${data.action}`);
         client.emit('unknown_device_event', postData)
     }
-
-    console.log('data', data);
-
-    if (data.action === "led_change") {
-      console.log(data)
-
-    }
-
+    
     console.log(`Web socket message:`, data);
 
   });
